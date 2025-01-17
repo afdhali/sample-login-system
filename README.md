@@ -1,36 +1,182 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sample Login NextJs
 
-## Getting Started
+Proyek ini adalah implementasi sistem login menggunakan Next.js 14 dengan berbagai fitur modern dan keamanan yang baik.
 
-First, run the development server:
+## Spesifikasi Proyek
+
+### Teknologi yang Digunakan
+
+- Next.js 14
+- TypeScript
+- Prisma (ORM)
+- SQLite (Database)
+- NextAuth.js (Sistem Autentikasi - Client Server & Session Client) -> Bukan External Auth Service Provider
+- React Query (State Management & Data API Fetching)
+- Zod (Validasi)
+- React Hook Form
+- Tailwind CSS
+- Lucide React (Icons)
+- React Toastify (Notifications)
+
+### Fitur
+
+- Login dengan email dan password
+- Registrasi user baru
+- Session management
+- Protected routes
+- Form validation
+- Error handling
+- Responsive design
+- Loading states
+- Toast notifications
+- Session tracking
+
+## Cara Instalasi
+
+1. Clone repository
+
+```bash
+git clone [url-repository]
+cd sample-login
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Setup environment variables
+   Buat file `.env` di root project dan isi dengan:
+
+```env
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+4. Setup database
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+## Konfigurasi
+
+### Database
+
+1. Database SQLite akan otomatis dibuat di folder `/prisma` dengan nama `dev.db`
+2. Schema database dapat dilihat dan diubah di `prisma/schema.prisma`
+
+### NextAuth
+
+1. Konfigurasi NextAuth ada di `src/app/api/auth/[...nextauth]/auth.config.ts`
+2. Settings untuk session dan JWT ada di file yang sama
+
+### Form Validation
+
+1. Schema validasi ada di `src/lib/auth.ts`
+2. Bisa disesuaikan sesuai kebutuhan
+
+## Cara Menjalankan
+
+1. Development mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Production build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Monitoring Database
 
-## Learn More
+1. Menggunakan Prisma Studio
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx prisma studio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Buka browser dan akses `http://localhost:5555`
+- Di sini Anda bisa:
+  - Melihat semua data
+  - Menambah data
+  - Mengubah data
+  - Menghapus data
+  - Melakukan query
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Melihat Database SQLite langsung
 
-## Deploy on Vercel
+- Install SQLite Browser (https://sqlitebrowser.org/)
+- Buka file `prisma/dev.db`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Struktur Folder
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+/src
+  /app
+    /api  ---> Backend Server (Next JS Route Handler API)
+      /auth
+        /[...nextauth]
+        /session-tracking
+    /auth ---> Halaman Auth
+      /login
+      /signup
+  /components
+    /ui
+    LoginForm.tsx
+    SignUpForm.tsx
+  /lib
+    /prisma.ts ---> Konfigurasi Prisma ORM
+  /hooks
+    useAuth.ts
+  /types
+/prisma
+  schema.prisma
+```
+
+## Keamanan
+
+- Password di-hash menggunakan bcrypt
+- Session menggunakan JWT
+- Protected routes dengan middleware
+- Form validation di client dan server
+- Error handling yang aman
+- Session tracking untuk device monitoring
+
+## Troubleshooting
+
+1. Error Database
+
+```bash
+# Reset database
+npx prisma migrate reset
+
+# Generate ulang client
+npx prisma generate
+```
+
+2. Error Session
+
+- Hapus cookies di browser
+- Pastikan NEXTAUTH_SECRET sudah benar
+- Cek file .env
+
+3. Error Prisma Studio
+
+```bash
+# Restart Prisma Studio
+npx prisma studio --browser none
+```
+
+## Catatan Tambahan
+
+- Background image harus diletakkan di `/public/images/`
+- Pastikan port 3000 tidak digunakan aplikasi lain
+- Untuk development, gunakan email yang valid formatnya
+- Password minimal 6 karakter, harus ada huruf besar, angka, dan karakter khusus
