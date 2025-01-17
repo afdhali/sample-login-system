@@ -13,7 +13,7 @@ Proyek ini adalah implementasi sistem login menggunakan Next.js 14 dengan berbag
 - NextAuth.js (Sistem Autentikasi - Client Server & Session Client) -> Bukan External Auth Service Provider
 - React Query (State Management & Data API Fetching)
 - Zod (Validasi)
-- React Hook Form
+- React Hook Form (Form khusus React Compoonent dengan Kustomisasi styling dan integrasi validasi dengan mudah)
 - Tailwind CSS
 - Lucide React (Icons)
 - React Toastify (Notifications)
@@ -76,7 +76,7 @@ npx prisma db push
 
 ### Form Validation
 
-1. Schema validasi ada di `src/lib/auth.ts`
+1. Schema validasi ada di `src/schemas/auth.ts`
 2. Bisa disesuaikan sesuai kebutuhan
 
 ## Cara Menjalankan
@@ -121,9 +121,11 @@ npx prisma studio
 /src
   /app
     /api  ---> Backend Server (Next JS Route Handler API)
+      /users/[id]
       /auth
         /[...nextauth]
         /session-tracking
+        /signup
     /auth ---> Halaman Auth
       /login
       /signup
@@ -134,7 +136,7 @@ npx prisma studio
   /lib
     /prisma.ts ---> Konfigurasi Prisma ORM
   /hooks
-    useAuth.ts
+    useAuth.ts (sudah include hooks untuk Login, Logout dan Session yang reusable)
   /types
 /prisma
   schema.prisma
