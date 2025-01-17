@@ -37,7 +37,7 @@ Proyek ini adalah implementasi sistem login menggunakan Next.js 14 dengan berbag
 
 ```bash
 git clone [url-repository]
-cd sample-login
+cd sample-login-system
 ```
 
 2. Install dependencies
